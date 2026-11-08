@@ -1,7 +1,7 @@
 # Woolwords website
 
 The language picker includes English, Spanish, French, Dutch, German, Italian,
-Portuguese (Portugal and Brazil), Swedish, Danish, Norwegian Bokmål, Indonesian, Polish and Turkish. Additional
+Portuguese (Portugal and Brazil), Swedish, Danish, Norwegian Bokmål, Indonesian, Polish, Turkish and Ukrainian. Additional
 translation data lives in `locales.js`, loaded before `i18n.js` on both pages.
 Privacy copy, streak copy, accessibility labels and metadata are localized too.
 Language detection preserves Portuguese regional tags and maps Norwegian `no` to
