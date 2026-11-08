@@ -15,6 +15,83 @@
     nl: {nav:'Hoofdnavigatie', classic:'Klassieke Woolwords-puzzel op een Android-scherm', tough:'Pittige Woolwords-puzzel in donkere modus', privacy:'Privacybeleid — Woolwords'},
     de: {nav:'Hauptnavigation', classic:'Klassisches Woolwords-Rätsel auf einem Android-Bildschirm', tough:'Kniffliges Woolwords-Rätsel im Dunkelmodus', privacy:'Datenschutzerklärung — Woolwords'}
   };
+  const streakCopy = {
+  "en": {
+    "values": [
+      "ONE DAY. ONE STITCH.",
+      "A little streak.<br><em>A lasting bloom.</em>",
+      "Classic, Tough or bonus: finish any puzzle each day to add one stitch to your streak. Each day counts once, even if you finish a whole handful.",
+      "A reason to come back",
+      "Watch your garland bloom, count down to your next milestone, and follow your yarn trail from “See your progress”.",
+      "Little treasures, yours to keep",
+      "Earn flowers, ribbons, embroidered frames and golden details. Reach 100 days for a gold Woolwords title. Every cosmetic reward stays unlocked, even if you miss a day.",
+      "A thread without an end",
+      "Your streak keeps growing beyond every milestone. Finish an older puzzle and it counts for the day you play, without filling missed dates.",
+      "Streaks & rewards"
+    ],
+    "alt": "A finished Woolwords puzzle with a ten-day streak garland and earned sage stitching"
+  },
+  "nl": {
+    "values": [
+      "ÉÉN DAG. ÉÉN STEEKJE.",
+      "Een kleine reeks.<br><em>Blijvende bloei.</em>",
+      "Klassiek, Pittig of bonus: maak elke dag een puzzel af voor één steekje in je reeks. Elke dag telt één keer, ook als je meerdere puzzels afmaakt.",
+      "Een reden om terug te komen",
+      "Zie je slinger bloeien, tel af naar je volgende mijlpaal en volg je draad via “Bekijk je voortgang”.",
+      "Kleine schatten, voor altijd van jou",
+      "Verdien bloemen, linten, geborduurde randen en gouden details. Bij 100 dagen wordt de Woolwords-titel goud. Elke versiering blijft van jou, ook als je een dag overslaat.",
+      "Een draad zonder einde",
+      "Je reeks groeit door na elke mijlpaal. Een oudere puzzel telt voor de dag waarop je speelt en vult geen gemiste dagen aan.",
+      "Reeksen & beloningen"
+    ],
+    "alt": "Een voltooide Woolwords-puzzel met een reeks van tien dagen en verdiende saliegroene steken"
+  },
+  "es": {
+    "values": [
+      "UN DÍA. UNA PUNTADA.",
+      "Una pequeña racha.<br><em>Flores que perduran.</em>",
+      "Clásico, Difícil o extra: completa cualquier puzle cada día para añadir una puntada a tu racha. Cada día cuenta una vez, aunque completes varios puzles.",
+      "Un motivo para volver",
+      "Mira florecer tu guirnalda, cuenta los días hasta el próximo hito y sigue tu hilo desde “Ver tu progreso”.",
+      "Pequeños tesoros para siempre",
+      "Gana flores, lazos, marcos bordados y detalles dorados. A los 100 días, el título de Woolwords se vuelve dorado. Conservas cada adorno aunque te saltes un día.",
+      "Un hilo sin final",
+      "Tu racha sigue creciendo después de cada hito. Los puzles antiguos cuentan el día que juegas y no rellenan fechas perdidas.",
+      "Rachas y recompensas"
+    ],
+    "alt": "Un puzle de Woolwords completado con una racha de diez días y puntadas salvia conseguidas"
+  },
+  "fr": {
+    "values": [
+      "UN JOUR. UNE MAILLE.",
+      "Une petite série.<br><em>Des fleurs durables.</em>",
+      "Classique, Difficile ou bonus : terminez une grille chaque jour pour ajouter une maille à votre série. Chaque journée compte une fois, même si vous terminez plusieurs grilles.",
+      "Une raison de revenir",
+      "Regardez fleurir votre guirlande, comptez les jours avant la prochaine étape et suivez votre fil depuis « Voir votre progression ».",
+      "De petits trésors à garder",
+      "Gagnez des fleurs, rubans, cadres brodés et détails dorés. À 100 jours, le titre Woolwords devient doré. Chaque ornement reste acquis, même si vous manquez un jour.",
+      "Un fil sans fin",
+      "Votre série continue après chaque étape. Les anciennes grilles comptent le jour où vous jouez, sans combler les jours manqués.",
+      "Séries et récompenses"
+    ],
+    "alt": "Une grille Woolwords terminée avec une série de dix jours et des points de sauge acquis"
+  },
+  "de": {
+    "values": [
+      "EIN TAG. EIN STICH.",
+      "Eine kleine Serie.<br><em>Bleibende Blüten.</em>",
+      "Klassisch, Knifflig oder Bonus: Beende jeden Tag ein Rätsel für einen Stich in deiner Serie. Jeder Tag zählt einmal, auch wenn du mehrere Rätsel löst.",
+      "Ein Grund zum Wiederkommen",
+      "Sieh deine Girlande blühen, zähle die Tage bis zum nächsten Meilenstein und folge deinem Faden über „Fortschritt ansehen“.",
+      "Kleine Schätze zum Behalten",
+      "Verdiene Blumen, Bänder, gestickte Rahmen und goldene Details. Bei 100 Tagen wird der Woolwords-Titel golden. Jedes Schmuckstück bleibt dein, auch wenn du einen Tag auslässt.",
+      "Ein Faden ohne Ende",
+      "Deine Serie wächst über jeden Meilenstein hinaus. Ältere Rätsel zählen an deinem Spieltag und füllen keine verpassten Tage auf.",
+      "Serien und Belohnungen"
+    ],
+    "alt": "Ein abgeschlossenes Woolwords-Rätsel mit einer Serie von zehn Tagen und verdienten salbeigrünen Stichen"
+  }
+};
   function render(lang) {
     const values=translations[lang];
     selectors.forEach((s,i) => {
@@ -24,6 +101,9 @@
       if ([27,29,31].includes(i)) return;
       element.innerHTML=values[i];
     });
+    const streak = streakCopy[lang];
+    [".streak-copy .eyebrow", "#streak-heading", ".streak-intro", ".streak-details article:nth-child(1) h3", ".streak-details article:nth-child(1) p", ".streak-details article:nth-child(2) h3", ".streak-details article:nth-child(2) p", ".streak-details article:nth-child(3) h3", ".streak-details article:nth-child(3) p", ".streak-nav"].forEach((selector, index) => { const element=document.querySelector(selector); if (element) element.innerHTML=streak.values[index]; });
+    document.querySelector(".streak-art img")?.setAttribute("alt",streak.alt);
     const meta=metadata[lang];
     document.querySelector('nav')?.setAttribute('aria-label',meta.nav);
     document.querySelector('.phone img')?.setAttribute('alt',meta.classic);
