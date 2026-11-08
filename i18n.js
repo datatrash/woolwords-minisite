@@ -1,5 +1,7 @@
 (() => {
   const choices = {en:'🇬🇧 English', es:'🇪🇸 Español', fr:'🇫🇷 Français', nl:'🇳🇱 Nederlands', de:'🇩🇪 Deutsch'};
+  const added = window.WoolwordsLocales || {};
+  Object.entries(added).forEach(([code, locale]) => { choices[code] = locale.label; });
   const translations = {
     es: ['Cómo jugar','Los detalles','UN PEQUEÑO JUEGO DIARIO DE PALABRAS','Encuentra un poco de<br><em>espacio</em> para jugar.','Un puñado de letras y un momento para ti. Sigue las palabras y desenreda el lío.','Próximamente para Android','Descubre cómo jugar','Hecho para pequeñas pausas','Tómate tu tiempo y disfruta.','ENCUENTRA LAS PALABRAS','DESENREDA EL TABLERO','VUELVE MAÑANA','UN PEQUEÑO RITUAL','Una palabra a la vez','Sin prisas. Solo tú, una cuadrícula y el placer de ver cómo todo encaja.','01 / OBSERVA','Encuentra una palabra','Observa las letras. Las palabras pueden girar entre letras vecinas.','02 / TRAZA','Sigue las letras','Desliza por las fichas o toca las letras una a una. Descubre palabras ocultas.','03 / DESENREDA','Desenreda todo','Encuentra todas las palabras y despeja el tablero. Mañana te espera otro reto.','UN RETO A TU RITMO','Acogedor, con<br><em>un toque ingenioso.</em>','Disfruta de un tablero Clásico de <span class="board-size">4 × 4</span> o del reto Difícil de <span class="board-size">5 × 5</span>.','Dos retos diarios','Clásico y Difícil, con un tablero nuevo cada día.','A tu manera','Modo claro, oscuro o el de tu dispositivo.','Un pequeño extra','Desbloquea retos adicionales viendo un anuncio opcional.','HASTA MAÑANA','Haz un hueco<br>para <em>jugar.</em>','Woolwords llegará a Android.','Contactar','Un pequeño lío de letras de datatrash.','Política de privacidad','Contacto','El juego'],
     fr: ['Comment jouer','Les détails','UN PETIT JEU DE MOTS QUOTIDIEN','Trouvez un peu<br>d’<em>espace</em> pour jouer.','Quelques lettres, un moment pour vous. Suivez les mots et démêlez le tout.','Bientôt sur Android','Découvrir le jeu','Pour les petites pauses','Prenez votre temps et profitez.','TROUVEZ LES MOTS','DÉMÊLEZ LA GRILLE','À DEMAIN','UN PETIT RITUEL','Un mot à la fois','Pas de précipitation. Juste vous, une grille et le plaisir de tout remettre en place.','01 / OBSERVEZ','Repérez un mot','Observez les lettres. Les mots serpentent entre les lettres voisines.','02 / TRACEZ','Suivez les lettres','Glissez sur les cases ou touchez les lettres une à une. Découvrez des mots cachés.','03 / DÉMÊLEZ','Démêlez le tout','Trouvez tous les mots pour vider la grille. Un nouveau défi vous attend demain.','UN DÉFI À VOTRE RYTHME','Doux, avec<br><em>un brin d’astuce.</em>','Profitez d’une grille Classique de <span class="board-size">4 × 4</span> ou Difficile de <span class="board-size">5 × 5</span>.','Deux défis quotidiens','Classique et Difficile, avec une nouvelle grille chaque jour.','À votre façon','Clair, sombre ou selon votre appareil.','Un petit supplément','Débloquez des jeux bonus avec une publicité facultative.','À DEMAIN','Faites une place<br>au <em>jeu.</em>','Woolwords arrive sur Android.','Nous contacter','Un petit jeu de mots par datatrash.','Politique de confidentialité','Contact','Le jeu'],
@@ -92,6 +94,14 @@
     "alt": "Ein abgeschlossenes Woolwords-Rätsel mit einer Serie von zehn Tagen und verdienten salbeigrünen Stichen"
   }
 };
+  Object.entries(added).forEach(([code, locale]) => {
+    translations[code] = locale.values;
+    metadata[code] = locale.meta;
+    streakCopy[code] = locale.streak;
+  });
+  const originalTitle = document.title;
+  const description = document.querySelector('meta[name="description"]');
+  const originalDescription = description?.content || '';
   function render(lang) {
     const values=translations[lang];
     selectors.forEach((s,i) => {
@@ -105,14 +115,21 @@
     [".streak-copy .eyebrow", "#streak-heading", ".streak-intro", ".streak-details article:nth-child(1) h3", ".streak-details article:nth-child(1) p", ".streak-details article:nth-child(2) h3", ".streak-details article:nth-child(2) p", ".streak-details article:nth-child(3) h3", ".streak-details article:nth-child(3) p", ".streak-nav"].forEach((selector, index) => { const element=document.querySelector(selector); if (element) element.innerHTML=streak.values[index]; });
     document.querySelector(".streak-art img")?.setAttribute("alt",streak.alt);
     const meta=metadata[lang];
+    document.querySelector('.header .brand')?.setAttribute('aria-label',meta.home || 'Woolwords home');
+    document.querySelector('.ribbon')?.setAttribute('aria-label',meta.highlights || 'Game highlights');
+    document.querySelector('.streak-milestones')?.setAttribute('aria-label',meta.milestones || 'Streak milestones');
+    document.querySelector('.language-select')?.setAttribute('aria-label',meta.language || 'Language');
     document.querySelector('nav')?.setAttribute('aria-label',meta.nav);
     document.querySelector('.phone img')?.setAttribute('alt',meta.classic);
     document.querySelector('.phone-dark img')?.setAttribute('alt',meta.tough);
     if (document.querySelector('.policy')) {
       document.title=meta.privacy;
       const contact=document.querySelector('nav .nav-contact');
-      if (contact) contact.textContent=({en:'Get in touch ↗',es:'Contactar ↗',fr:'Nous contacter ↗',nl:'Neem contact op ↗',de:'Kontakt aufnehmen ↗'})[lang];
+      if (contact) contact.textContent=meta.contact || ({en:'Get in touch ↗',es:'Contactar ↗',fr:'Nous contacter ↗',nl:'Neem contact op ↗',de:'Kontakt aufnehmen ↗'})[lang];
+    } else {
+      document.title = meta.title || originalTitle;
     }
+    if (description) description.content = document.querySelector('.policy') ? (meta.privacyDescription || originalDescription) : (meta.description || originalDescription);
     document.documentElement.lang=lang;
     document.querySelector('.language-select').value=lang;
   }
@@ -120,7 +137,14 @@
   for (const [code,label] of Object.entries(choices)) { const option=document.createElement('option'); option.value=code; option.textContent=label; select.append(option); }
   document.querySelector('.header').append(select);
   let lang; try { lang=localStorage.getItem('letterloom-language'); } catch (_) {}
-  if (!choices[lang]) lang=(navigator.language || 'en').slice(0,2).toLowerCase();
+  function resolve(value) {
+    const tag = String(value || '').toLowerCase();
+    if (tag === 'pt' || tag.startsWith('pt-')) return tag === 'pt-br' ? 'pt-BR' : 'pt-PT';
+    const base = tag.split('-')[0];
+    if (base === 'no' || base === 'nb') return 'nb';
+    return choices[base] ? base : null;
+  }
+  if (!choices[lang]) lang=resolve(lang) || (navigator.languages || [navigator.language]).map(resolve).find(Boolean);
   if (!choices[lang]) lang='en';
   select.addEventListener('change', () => { try { localStorage.setItem('letterloom-language',select.value); } catch (_) {} render(select.value); });
   render(lang);

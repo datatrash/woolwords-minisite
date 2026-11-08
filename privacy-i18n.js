@@ -57,6 +57,7 @@
     }
     element.append(document.createTextNode(text.slice(last)));
   }
+  Object.entries(window.WoolwordsLocales || {}).forEach(([code, locale]) => { texts[code] = locale.privacy; });
   function render(){
     const t=texts[document.documentElement.lang]; if(!t){article.innerHTML=original;return;}
     article.innerHTML='';
