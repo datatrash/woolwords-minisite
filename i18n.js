@@ -1,5 +1,5 @@
 (() => {
-  const choices = {en:'🇬🇧 English', es:'🇪🇸 Español', fr:'🇫🇷 Français', nl:'🇳🇱 Nederlands', de:'🇩🇪 Deutsch'};
+  const choices = {en:'English', es:'Español', fr:'Français', nl:'Nederlands', de:'Deutsch'};
   const added = window.WoolwordsLocales || {};
   Object.entries(added).forEach(([code, locale]) => { choices[code] = locale.label; });
   const translations = {
@@ -134,7 +134,10 @@
     document.querySelector('.language-select').value=lang;
   }
   const select=document.createElement('select'); select.className='language-select'; select.setAttribute('aria-label','Language / Idioma / Langue / Taal / Sprache');
-  for (const [code,label] of Object.entries(choices)) { const option=document.createElement('option'); option.value=code; option.textContent=label; select.append(option); }
+  const languageNames = new Intl.Collator('en', {sensitivity:'base'});
+  for (const [code,label] of Object.entries(choices).sort((a,b) => languageNames.compare(a[1],b[1]))) {
+    const option=document.createElement('option'); option.value=code; option.textContent=`${code.toUpperCase()} · ${label}`; select.append(option);
+  }
   document.querySelector('.header').append(select);
   let lang; try { lang=localStorage.getItem('letterloom-language'); } catch (_) {}
   function resolve(value) {
