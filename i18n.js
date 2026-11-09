@@ -11,11 +11,11 @@
   const selectors = ['nav a[href="#how"]','nav a[href="#features"]','.hero-copy .eyebrow','.hero-copy h1','.hero-copy > p','.pill','.text-link','.art-label strong','.art-label small','.ribbon-item:nth-child(1)','.ribbon-item:nth-child(3)','.ribbon-item:nth-child(5)','.section-intro .eyebrow','.section-intro h2','.section-intro p','.steps article:nth-child(1) .step-num','.steps article:nth-child(1) h3','.steps article:nth-child(1) p','.steps article:nth-child(2) .step-num','.steps article:nth-child(2) h3','.steps article:nth-child(2) p','.steps article:nth-child(3) .step-num','.steps article:nth-child(3) h3','.steps article:nth-child(3) p','.mode-copy .eyebrow','.mode-copy h2','.mode-copy > p','.feature-list > div:nth-child(1) strong','.feature-list > div:nth-child(1) p','.feature-list > div:nth-child(2) strong','.feature-list > div:nth-child(2) p','.feature-list > div:nth-child(3) strong','.feature-list > div:nth-child(3) p','.last .eyebrow','.last h2','.last p','.contact-button','.footer > p','.footer a[href="/privacy/"]','.footer a[href^="mailto:"]','nav a[href="/"]'];
   const initial = selectors.map(s => document.querySelector(s)?.innerHTML || '');
   const metadata = {
-    en: {nav:'Main navigation', classic:"Woolwords’s Classic word puzzle on an Android screen", tough:"Woolwords’s Tough puzzle in dark mode", privacy:'Privacy policy — Woolwords'},
-    es: {nav:'Navegación principal', classic:'Reto Clásico de Woolwords en una pantalla de Android', tough:'Reto Difícil de Woolwords en modo oscuro', privacy:'Política de privacidad — Woolwords'},
-    fr: {nav:'Navigation principale', classic:'Jeu Classique de Woolwords sur un écran Android', tough:'Jeu Difficile de Woolwords en mode sombre', privacy:'Politique de confidentialité — Woolwords'},
-    nl: {nav:'Hoofdnavigatie', classic:'Klassieke Woolwords-puzzel op een Android-scherm', tough:'Pittige Woolwords-puzzel in donkere modus', privacy:'Privacybeleid — Woolwords'},
-    de: {nav:'Hauptnavigation', classic:'Klassisches Woolwords-Rätsel auf einem Android-Bildschirm', tough:'Kniffliges Woolwords-Rätsel im Dunkelmodus', privacy:'Datenschutzerklärung — Woolwords'}
+    en: {nav:'Main navigation', classic:"Woolwords’s Classic word puzzle on an Android screen", tough:"Woolwords’s Tough puzzle", privacy:'Privacy policy — Woolwords'},
+    es: {nav:'Navegación principal', classic:'Reto Clásico de Woolwords en una pantalla de Android', tough:'Reto Difícil de Woolwords', privacy:'Política de privacidad — Woolwords'},
+    fr: {nav:'Navigation principale', classic:'Jeu Classique de Woolwords sur un écran Android', tough:'Jeu Difficile de Woolwords', privacy:'Politique de confidentialité — Woolwords'},
+    nl: {nav:'Hoofdnavigatie', classic:'Klassieke Woolwords-puzzel op een Android-scherm', tough:'Pittige Woolwords-puzzel', privacy:'Privacybeleid — Woolwords'},
+    de: {nav:'Hauptnavigation', classic:'Klassisches Woolwords-Rätsel auf einem Android-Bildschirm', tough:'Kniffliges Woolwords-Rätsel', privacy:'Datenschutzerklärung — Woolwords'}
   };
   const streakCopy = {
   "en": {
@@ -31,7 +31,7 @@
       "Your streak keeps growing beyond every milestone. Finish an older puzzle and it counts for the day you play, without filling missed dates.",
       "Streaks & rewards"
     ],
-    "alt": "A finished Woolwords puzzle with a ten-day streak garland and earned sage stitching"
+    "alt": "A finished Woolwords puzzle with a 25-day streak garland and earned sage stitching"
   },
   "nl": {
     "values": [
@@ -46,7 +46,7 @@
       "Je reeks groeit door na elke mijlpaal. Een oudere puzzel telt voor de dag waarop je speelt en vult geen gemiste dagen aan.",
       "Reeksen & beloningen"
     ],
-    "alt": "Een voltooide Woolwords-puzzel met een reeks van tien dagen en verdiende saliegroene steken"
+    "alt": "Een voltooide Woolwords-puzzel met een reeks van 25 dagen en verdiende saliegroene steken"
   },
   "es": {
     "values": [
@@ -61,7 +61,7 @@
       "Tu racha sigue creciendo después de cada hito. Los puzles antiguos cuentan el día que juegas y no rellenan fechas perdidas.",
       "Rachas y recompensas"
     ],
-    "alt": "Un puzle de Woolwords completado con una racha de diez días y puntadas salvia conseguidas"
+    "alt": "Un puzle de Woolwords completado con una racha de 25 días y puntadas salvia conseguidas"
   },
   "fr": {
     "values": [
@@ -76,7 +76,7 @@
       "Votre série continue après chaque étape. Les anciennes grilles comptent le jour où vous jouez, sans combler les jours manqués.",
       "Séries et récompenses"
     ],
-    "alt": "Une grille Woolwords terminée avec une série de dix jours et des points de sauge acquis"
+    "alt": "Une grille Woolwords terminée avec une série de 25 jours et des points de sauge acquis"
   },
   "de": {
     "values": [
@@ -91,7 +91,7 @@
       "Deine Serie wächst über jeden Meilenstein hinaus. Ältere Rätsel zählen an deinem Spieltag und füllen keine verpassten Tage auf.",
       "Serien und Belohnungen"
     ],
-    "alt": "Ein abgeschlossenes Woolwords-Rätsel mit einer Serie von zehn Tagen und verdienten salbeigrünen Stichen"
+    "alt": "Ein abgeschlossenes Woolwords-Rätsel mit einer Serie von 25 Tagen und verdienten salbeigrünen Stichen"
   }
 };
   Object.entries(added).forEach(([code, locale]) => {
@@ -114,6 +114,9 @@
     const streak = streakCopy[lang];
     [".streak-copy .eyebrow", "#streak-heading", ".streak-intro", ".streak-details article:nth-child(1) h3", ".streak-details article:nth-child(1) p", ".streak-details article:nth-child(2) h3", ".streak-details article:nth-child(2) p", ".streak-details article:nth-child(3) h3", ".streak-details article:nth-child(3) p", ".streak-nav"].forEach((selector, index) => { const element=document.querySelector(selector); if (element) element.innerHTML=streak.values[index]; });
     document.querySelector(".streak-art img")?.setAttribute("alt",streak.alt);
+    // Screenshots are generated per language by tools/build_minisite_screens.py in the app repository.
+    [['.hero-art .phone img','classic'],['.phone-dark img','tough'],['.streak-art img','streak']].forEach(([selector,name]) =>
+      document.querySelector(selector)?.setAttribute('src',`/assets/screens/${lang}/${name}.webp`));
     const meta=metadata[lang];
     document.querySelector('.header .brand')?.setAttribute('aria-label',meta.home || 'Woolwords home');
     document.querySelector('.ribbon')?.setAttribute('aria-label',meta.highlights || 'Game highlights');
