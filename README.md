@@ -19,6 +19,6 @@ This is a build-free static site configured for Netlify. Import this repository 
 
 Before publishing, review the privacy policy against your actual hosting provider, advertising settings, audience, and data practices. The intended audience is 13 and older, and the app requests only non-personalized ads (with restricted data processing for US users). Confirm the publisher ID line in `app-ads.txt` matches the personalized snippet in AdMob. Google may check the developer website's subdomain or parent domain; check the exact URL AdMob reports and host the file there if needed. After deployment, confirm all three URLs work publicly over HTTPS. Do not use the privacy policy URL until it is deployed and reviewed.
 
-The app's Google Play listing does not yet exist, so the site intentionally says “Coming to Android”. Once published, replace that label with a real Play Store link. The font licenses are in `assets/ALEGREYA_LICENSE.txt` and `assets/ALEGREYA_SANS_LICENSE.txt`; screenshots and icon are from this project.
+The hero label and closing section link to the Google Play listing (`sh.datatra.letterloom`). The font licenses are in `assets/ALEGREYA_LICENSE.txt` and `assets/ALEGREYA_SANS_LICENSE.txt`; screenshots and icon are from this project.
 
 The streaks section explains daily play credits, permanent cosmetic rewards, and the separate yarn-trail progress screen in all five languages. `assets/streak.png` is a real emulator capture with seeded ten-day test progress. Keep the later mystery milestone out of public copy and screenshots.
